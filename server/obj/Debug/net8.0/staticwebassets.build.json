@@ -1,11 +1,39 @@
 {
   "Version": 1,
-  "Hash": "wHmTdzQjOI+52yc/ssik8jb3aBon0KdSXd8S7aZ3iSw=",
+  "Hash": "jPBFKhK5DAOCg3LXjfMQjO6+Ds+Mo0EFMEOPSo7oGKs=",
   "Source": "server",
   "BasePath": "_content/server",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "server\\wwwroot",
+      "Source": "server",
+      "ContentRoot": "E:\\fashion\\server\\wwwroot\\",
+      "BasePath": "_content/server",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "E:\\fashion\\server\\wwwroot\\avatars\\38b0d383-feb7-46bf-91d9-2275365b2965.jpg",
+      "SourceId": "server",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\fashion\\server\\wwwroot\\",
+      "BasePath": "_content/server",
+      "RelativePath": "avatars/38b0d383-feb7-46bf-91d9-2275365b2965.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\avatars\\38b0d383-feb7-46bf-91d9-2275365b2965.jpg"
+    }
+  ]
 }

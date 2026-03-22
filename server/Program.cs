@@ -63,6 +63,19 @@ builder.Services.AddAuthorization();
 // DI
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+
+builder.Services.AddScoped<IProductVariantRepository, ProductVariantRepository>();
+builder.Services.AddScoped<IProductVariantService, ProductVariantService>();
+
+builder.Services.AddScoped<IProductImageRepository, ProductImageRepository>();
+builder.Services.AddScoped<IProductImageService, ProductImageService>();
+
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<SecurityService>();
 builder.Services.AddScoped<EmailService>();
@@ -106,9 +119,7 @@ app.UseHttpsRedirection();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-// app.UseAuthentication();
 app.UseMiddleware<JwtMiddleware>();
-// app.UseAuthorization();
 
 app.MapControllers();
 
