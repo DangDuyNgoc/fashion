@@ -26,7 +26,7 @@ namespace server.Services
             }).ToList();
         }
 
-        public async Task<List<ProductImageDTO>> Create(ProductImageDTO dto)
+        public async Task<List<ProductImageDTO>> UploadImages(UploadProductImageDTO dto)
         {
             var result = new List<ProductImageDTO>();
 
