@@ -1,0 +1,37 @@
+{
+  "Files": [
+    {
+      "Id": "E:\\fashion\\server\\wwwroot\\avatars\\38b0d383-feb7-46bf-91d9-2275365b2965.jpg",
+      "PackagePath": "staticwebassets\\avatars\\38b0d383-feb7-46bf-91d9-2275365b2965.jpg"
+    },
+    {
+      "Id": "E:\\fashion\\server\\wwwroot\\images\\8edeb014-abee-4aa8-bef9-4cc5e248092c.png",
+      "PackagePath": "staticwebassets\\images\\8edeb014-abee-4aa8-bef9-4cc5e248092c.png"
+    },
+    {
+      "Id": "E:\\fashion\\server\\wwwroot\\images\\cd3a5bfa-8429-4aff-b662-9c45520f0cc7.png",
+      "PackagePath": "staticwebassets\\images\\cd3a5bfa-8429-4aff-b662-9c45520f0cc7.png"
+    },
+    {
+      "Id": "E:\\fashion\\server\\wwwroot\\images\\df024854-5cfc-437c-b96c-83dbe2a1bf71.png",
+      "PackagePath": "staticwebassets\\images\\df024854-5cfc-437c-b96c-83dbe2a1bf71.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.server.props",
+      "PackagePath": "build\\server.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.server.props",
+      "PackagePath": "buildMultiTargeting\\server.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.server.props",
+      "PackagePath": "buildTransitive\\server.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.server.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

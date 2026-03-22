@@ -118,3 +118,4 @@ E:\fashion\server\bin\Debug\net8.0\Sprache.dll
 E:\fashion\server\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
 E:\fashion\server\bin\Debug\net8.0\MailKit.dll
 E:\fashion\server\bin\Debug\net8.0\MimeKit.dll
+E:\fashion\server\bin\Debug\net8.0\server.staticwebassets.runtime.json
