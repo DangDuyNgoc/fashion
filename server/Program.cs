@@ -76,6 +76,9 @@ builder.Services.AddScoped<IProductVariantService, ProductVariantService>();
 builder.Services.AddScoped<IProductImageRepository, ProductImageRepository>();
 builder.Services.AddScoped<IProductImageService, ProductImageService>();
 
+builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<ICartService, CartService>();
+
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<SecurityService>();
 builder.Services.AddScoped<EmailService>();
