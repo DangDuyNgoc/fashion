@@ -18,6 +18,7 @@ namespace server.Repositories
             return await _context.Products
                 .Include(p => p.Images)
                 .Include(p => p.Category)
+                .Include(p => p.Variants)
                 .ToListAsync();
         }
 
@@ -26,6 +27,7 @@ namespace server.Repositories
             return await _context.Products
                 .Include(p => p.Images)
                 .Include(p => p.Variants)
+                .Include(p => p.Category)
                 .Include(p => p.Reviews)
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
@@ -39,7 +41,7 @@ namespace server.Repositories
 
         public async Task<Product?> UpdateAsync(Product product)
         {
-            var existing = await _context.Products.FindAsync(product.Id);
+            var existing = await _context.Products.FirstOrDefaultAsync(p => p.Id == product.Id);
             if (existing == null) return null;
 
             existing.Name = product.Name;
@@ -53,7 +55,11 @@ namespace server.Repositories
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product = await _context.Products
+                .Include(p => p.Images)
+                .Include(p => p.Variants)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
             if (product == null) return false;
 
             _context.Products.Remove(product);
