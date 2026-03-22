@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using server.DTOs;
 using server.Services;
+using server.Middleware;
 
 namespace server.Controllers
 {
@@ -31,6 +32,7 @@ namespace server.Controllers
         }
 
         [HttpPost("create-product")]
+        [Authorize(Role = "Admin")]
         public async Task<IActionResult> Create(CreateProductDTO dto)
         {
             var product = await _service.CreateAsync(dto);

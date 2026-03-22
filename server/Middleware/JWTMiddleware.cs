@@ -31,12 +31,19 @@ namespace server.Middleware
                 {
                     token = authHeader.Trim();
                 }
-                AttachUserToContext(context, token);
+                var isValid = AttachUserToContext(context, token);
+
+                if (!isValid)
+                {
+                    context.Response.StatusCode = 401;
+                    await context.Response.WriteAsync("Invalid Token");
+                    return;
+                }
             }
             await _next(context);
         }
 
-        private void AttachUserToContext(HttpContext context, string token)
+        private bool AttachUserToContext(HttpContext context, string token)
         {
             try
             {
@@ -71,21 +78,23 @@ namespace server.Middleware
                     .FirstOrDefault(x => x.Type == ClaimTypes.Role);
 
                 if (userIdClaim == null || email == null)
-                    return;
+                    return false;
 
                 if (!Guid.TryParse(userIdClaim.Value, out var userId))
-                    return;
+                    return false;
 
                 // attached context
                 context.Items["UserId"] = userId;
                 context.Items["Email"] = email?.Value;
                 context.Items["Role"] = role?.Value ?? "User"; 
+
+                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine("JWT Error: " + e.Message);
                 context.Response.StatusCode = 401;
-                return;
+                return false;
             }
         }
     }
