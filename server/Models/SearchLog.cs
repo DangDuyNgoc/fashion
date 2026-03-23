@@ -7,7 +7,7 @@ namespace server.Models
         public int Id { get; set; }
 
         [ForeignKey("UserId")]
-        public Guid UserId { get; set; }
+        public Guid UserId { get; set; } = null!;
 
         public string Keyword { get; set; } = string.Empty;
 
