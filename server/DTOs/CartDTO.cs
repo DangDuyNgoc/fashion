@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace server.DTOs
 {
     // ================= RESPONSE =================
@@ -20,13 +22,20 @@ namespace server.DTOs
     
     public class AddToCartDTO
     {
+
+        [Required]
         public int VariantId { get; set; }
+
+        [Required]
         public int Quantity { get; set; }
     }
 
     public class UpdateCartItemDTO
     {
+        [Required]
         public int VariantId { get; set; }
+
+        [Required]
         public int Quantity { get; set; }
     }
 }
