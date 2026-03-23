@@ -15,6 +15,10 @@ namespace server.Models
 
         public Product Product { get; set; } = null!;
 
+        public int OrderItemId { get; set; } 
+
+        public OrderItem OrderItem { get; set; } = null!;
+
         public int Rating { get; set; }
 
         public string Comment { get; set; } = string.Empty;

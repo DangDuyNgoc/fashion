@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace server.DTOs
 {
     public class WishlistItemDTO
@@ -17,6 +19,7 @@ namespace server.DTOs
 
     public class AddWishlistDTO
     {
+        [Required]
         public int ProductId { get; set; }
     }
 }
