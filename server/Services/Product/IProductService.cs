@@ -8,6 +8,7 @@ namespace server.Services
         Task<ProductDTO?> GetByIdAsync(int id);
         Task<ProductDTO> CreateAsync(CreateProductDTO dto);
         Task<ProductDTO?> UpdateAsync(int id, UpdateProductDTO dto);
+        Task<List<ProductDTO>> GetFilteredAsync(ProductFilterRequest filter);
         Task<bool> DeleteAsync(int id);
     }
 }

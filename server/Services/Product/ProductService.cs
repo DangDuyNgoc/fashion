@@ -90,6 +90,13 @@ namespace server.Services
             return await _repo.DeleteAsync(id);
         }
 
+        // ================= GET FILTERED =================
+        public async Task<List<ProductDTO>> GetFilteredAsync(ProductFilterRequest filter)
+        {
+            var products = await _repo.GetFilteredAsync(filter);
+            return products.Select(MapToDTO).ToList();
+        }
+
         // ================= MAPPING =================
         private ProductDTO MapToDTO(Product p)
         {

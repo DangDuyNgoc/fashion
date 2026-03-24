@@ -11,7 +11,10 @@ namespace server.Repositories
         Task<Product> CreateAsync(Product product);
 
         Task<Product?> UpdateAsync(Product product);
+        
+        Task<List<Product>> GetFilteredAsync(ProductFilterRequest filter);
 
         Task<bool> DeleteAsync(int id);
+
     }
 }
