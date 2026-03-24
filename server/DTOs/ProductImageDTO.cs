@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace server.DTOs
 {
     public class ProductImageDTO
@@ -9,6 +11,7 @@ namespace server.DTOs
 
     public class UploadProductImageDTO
     {
+        [Required]
         public int ProductId { get; set; }
         public List<IFormFile> Images { get; set; } = new();
     }

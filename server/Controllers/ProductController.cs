@@ -54,5 +54,12 @@ namespace server.Controllers
             if (!result) return NotFound();
             return Ok("Deleted successfully");
         }
+
+        [HttpGet("filter")]
+        public async Task<IActionResult> Filter([FromQuery] ProductFilterRequest filter)
+        {
+            var result = await _service.GetFilteredAsync(filter);
+            return Ok(result);
+        }
     }
 }

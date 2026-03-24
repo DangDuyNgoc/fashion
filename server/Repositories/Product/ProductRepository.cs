@@ -66,5 +66,62 @@ namespace server.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<List<Product>> GetFilteredAsync(ProductFilterRequest filter)
+        {
+            var query = _context.Products
+                .AsNoTracking()
+                .Include(p => p.Images)
+                .Include(p => p.Category)
+                .Include(p => p.Variants)
+                .AsQueryable();
+
+            // Category
+            if (filter.CategoryId.HasValue)
+            {
+                query = query.Where(p => p.CategoryId == filter.CategoryId.Value);
+            }
+
+            // Price
+            if (filter.MinPrice.HasValue)
+            {
+                query = query.Where(p => p.Price >= filter.MinPrice.Value);
+            }
+
+            if (filter.MaxPrice.HasValue)
+            {
+                query = query.Where(p => p.Price <= filter.MaxPrice.Value);
+            }
+
+            // Variant (Color + Size)
+            if (!string.IsNullOrEmpty(filter.Color) || !string.IsNullOrEmpty(filter.Size))
+            {
+                query = query.Where(p =>
+                    p.Variants.Any(v =>
+                        (string.IsNullOrEmpty(filter.Color) || v.Color.ToLower() == filter.Color.ToLower()) &&
+                        (string.IsNullOrEmpty(filter.Size) || v.Size.ToLower() == filter.Size.ToLower())
+                    ));
+            }
+
+            // Keyword search
+            if (!string.IsNullOrEmpty(filter.Keyword))
+            {
+                 var keyword = $"%{filter.Keyword}%";
+
+                query = query.Where(p =>
+                    EF.Functions.Like(p.Name, keyword) ||
+                    EF.Functions.Like(p.Description, keyword)
+                );
+            }
+
+            // Pagination
+            var page = filter.Page <= 0 ? 1 : filter.Page;
+            var pageSize = filter.PageSize <= 0 ? 10 : filter.PageSize;
+
+            query = query.Skip((page - 1) * pageSize)
+                        .Take(pageSize);
+
+            return await query.ToListAsync();
+        }
     }
 }

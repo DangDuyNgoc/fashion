@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using server.DTOs;
 using server.Services;
+using server.Middleware;
 
 namespace server.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/cart")]
     public class CartController : ControllerBase
     {

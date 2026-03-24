@@ -12,6 +12,11 @@ namespace server.Models
 
         public ProductVariant Variant { get; set; } = null!;
 
+        public string ProductName { get; set; } = string.Empty;
+
+        public string VariantName { get; set; } = string.Empty;
+
+
         public int Quantity { get; set; }
 
         public decimal Price { get; set; }
