@@ -27,6 +27,17 @@ namespace server.Repositories
             return image;
         }
 
+        public async Task<ProductImage?> GetById(int id)
+        {
+            return await _context.ProductImages.FindAsync(id);
+        }
+
+        public async Task<bool> Update(ProductImage image)
+        {
+            _context.ProductImages.Update(image);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
         public async Task<bool> Delete(int id)
         {
             var img = await _context.ProductImages.FindAsync(id);

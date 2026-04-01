@@ -56,7 +56,9 @@ namespace server.Services
             {
                 Id = review.Id,
                 ProductId = review.ProductId,
+                UserId = review.UserId,
                 UserName = orderItem.Order.User.Name,
+                ProductName = orderItem.Variant.Product.Name,
                 Rating = review.Rating,
                 Comment = review.Comment,
                 CreatedAt = review.CreatedAt
@@ -71,7 +73,9 @@ namespace server.Services
             {
                 Id = r.Id,
                 ProductId = r.ProductId,
+                UserId = r.UserId,
                 UserName = r.User.Name,
+                ProductName = r.Product?.Name ?? string.Empty,
                 Rating = r.Rating,
                 Comment = r.Comment,
                 CreatedAt = r.CreatedAt
@@ -89,7 +93,9 @@ namespace server.Services
             {
                 Id = review.Id,
                 ProductId = review.ProductId,
+                UserId = review.UserId,
                 UserName = review.User.Name,
+                ProductName = review.Product?.Name ?? string.Empty,
                 Rating = review.Rating,
                 Comment = review.Comment,
                 CreatedAt = review.CreatedAt
@@ -156,6 +162,22 @@ namespace server.Services
             review.Comment = req.Comment;
 
             await _reviewRepo.SaveChangesAsync();
+        }
+
+        public async Task<List<ReviewResponse>> GetAllReviewsByAdminAsync()
+        {
+            var reviews = await _reviewRepo.GetAllAsync();
+
+            return reviews.Select(r => new ReviewResponse
+            {
+                Id = r.Id,
+                ProductId = r.ProductId,
+                UserName = r.User?.Name ?? "Ẩn danh",
+                ProductName = r.Product?.Name ?? "Sản phẩm không tồn tại",
+                Rating = r.Rating,
+                Comment = r.Comment,
+                CreatedAt = r.CreatedAt
+            }).ToList();
         }
     }
 }

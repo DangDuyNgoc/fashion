@@ -22,7 +22,8 @@ namespace server.Services
             {
                 Id = i.Id,
                 ProductId = i.ProductId,
-                ImageUrl = i.ImageUrl
+                ImageUrl = i.ImageUrl,
+                Color = i.Color
             }).ToList();
         }
 
@@ -47,7 +48,8 @@ namespace server.Services
                 var image = new ProductImage
                 {
                     ProductId = dto.ProductId,
-                    ImageUrl = "/images/" + fileName
+                    ImageUrl = "/images/" + fileName,
+                    Color = dto.Color
                 };
 
                 var created = await _repo.Create(image);
@@ -56,11 +58,21 @@ namespace server.Services
                 {
                     Id = created.Id,
                     ProductId = created.ProductId,
-                    ImageUrl = created.ImageUrl
+                    ImageUrl = created.ImageUrl,
+                    Color = created.Color
                 });
             }
             return result;
 
+        }
+
+        public async Task<bool> UpdateColor(int id, string color)
+        {
+            var image = await _repo.GetById(id);
+            if (image == null) return false;
+
+            image.Color = color;
+            return await _repo.Update(image);
         }
 
         public async Task<bool> Delete(int id)

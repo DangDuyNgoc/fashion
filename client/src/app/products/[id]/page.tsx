@@ -1,36 +1,29 @@
+import ProductGallery from "@/components/ProductGallery";
 import ProductInteraction from "@/components/ProductInteraction";
-import { ProductType } from "@/types";
+import ReviewSection from "@/components/ReviewSection";
+import { ApiProductType } from "@/types";
+import { productService } from "../../../../service/product.service";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
-// TEMPORARY
-const product: ProductType = {
-  id: 1,
-  name: "Adidas CoreFit T-Shirt",
-  shortDescription:
-    "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
-  description:
-    "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
-  price: 59.9,
-  sizes: ["xs", "s", "m", "l", "xl"],
-  colors: ["gray", "purple", "green"],
-  images: {
-    gray: "/products/1g.png",
-    purple: "/products/1p.png",
-    green: "/products/1gr.png",
-  },
-};
+export const dynamic = "force-dynamic";
 
 export const generateMetadata = async ({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) => {
-  // TODO:get the product from db
-  // TEMPORARY
-  return {
-    title: product.name,
-    describe: product.description,
-  };
+  try {
+    const { id } = await params;
+    const res = await productService.getById(id);
+    const product: ApiProductType = res.data;
+    return {
+      title: product.name,
+      description: product.description,
+    };
+  } catch {
+    return { title: "Sản phẩm" };
+  }
 };
 
 const ProductPage = async ({
@@ -40,28 +33,40 @@ const ProductPage = async ({
   params: Promise<{ id: string }>;
   searchParams: Promise<{ color: string; size: string }>;
 }) => {
+  const { id } = await params;
   const { size, color } = await searchParams;
 
-  const selectedSize = size || (product.sizes[0] as string);
-  const selectedColor = color || (product.colors[0] as string);
+  let product: ApiProductType;
+  try {
+    const res = await productService.getById(id);
+    product = res.data;
+  } catch {
+    notFound();
+  }
+
+  // Derive unique colors and sizes from variants
+  const colors = [...new Set(product!.variants.map((v) => v.color))];
+  const sizes = [...new Set(product!.variants.map((v) => v.size))];
+
+  const selectedColor = (color || colors[0] || "").toLowerCase().trim();
+  const selectedSize = size || sizes[0] || "";
+
   return (
     <div className="flex flex-col gap-4 lg:flex-row md:gap-12 mt-12">
-      {/* IMAGE */}
-      <div className="w-full lg:w-5/12 relative aspect-[2/3]">
-        <Image
-          src={product.images[selectedColor]}
-          alt={product.name}
-          fill
-          className="object-contain rounded-md"
-        />
-      </div>
+      {/* IMAGE GALLERY */}
+      <ProductGallery images={product.images} selectedColor={selectedColor} />
       {/* DETAILS */}
       <div className="w-full lg:w-7/12 flex flex-col gap-4">
-        <h1 className="text-2xl font-medium">{product.name}</h1>
-        <p className="text-gray-500">{product.description}</p>
-        <h2 className="text-2xl font-semibold">${product.price.toFixed(2)}</h2>
+        <p className="text-xs text-gray-400 uppercase tracking-widest">
+          {product!.categoryName}
+        </p>
+        <h1 className="text-2xl font-medium">{product!.name}</h1>
+        <p className="text-gray-500">{product!.description}</p>
+        <h2 className="text-2xl font-semibold">
+          {new Intl.NumberFormat("vi-VN").format(Number(product!.price))} ₫
+        </h2>
         <ProductInteraction
-          product={product}
+          product={product!}
           selectedSize={selectedSize}
           selectedColor={selectedColor}
         />
@@ -90,13 +95,23 @@ const ProductPage = async ({
           />
         </div>
         <p className="text-gray-500 text-xs">
-          By clicking Pay Now, you agree to our{" "}
-          <span className="underline hover:text-black">Terms & Conditions</span>{" "}
-          and <span className="underline hover:text-black">Privacy Policy</span>
-          . You authorize us to charge your selected payment method for the
-          total amount shown. All sales are subject to our return and{" "}
-          <span className="underline hover:text-black">Refund Policies</span>.
+          Bằng việc nhấn Thanh Toán Ngay, bạn đồng ý với{" "}
+          <span className="underline hover:text-black">
+            Điều khoản & Điều kiện
+          </span>{" "}
+          và{" "}
+          <span className="underline hover:text-black">Chính sách bảo mật</span>
+          . Bạn ủy quyền cho chúng tôi tính phí phương thức thanh toán đã chọn
+          cho tổng số tiền hiển thị. Tất cả giao dịch bán hàng đều tuân theo
+          chính sách đổi trả và{" "}
+          <span className="underline hover:text-black">
+            Chính sách hoàn tiền
+          </span>
+          .
         </p>
+      </div>
+      <div className="w-full">
+        <ReviewSection productId={product!.id} />
       </div>
     </div>
   );

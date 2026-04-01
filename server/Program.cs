@@ -30,6 +30,18 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
     ));
 
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000", "http://localhost:3001")
+              .AllowAnyMethod() 
+              .AllowAnyHeader()
+              .AllowCredentials();
+    });
+});
+
 // JWT Auth
 var jwtKey = builder.Configuration["Jwt:Key"];
 
@@ -131,7 +143,9 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
-app.UseHttpsRedirection();
+app.UseCors("AllowFrontend");
+
+// app.UseHttpsRedirection();
 
 app.UseSwagger();
 app.UseSwaggerUI();

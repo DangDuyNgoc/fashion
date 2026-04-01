@@ -102,6 +102,21 @@ public class AuthController : ControllerBase
         }
     }
 
+    [HttpGet("users")]
+    [Authorize(Role = "Admin")]
+    public IActionResult GetAllUsers()
+    {
+        try
+        {
+            var result = _service.GetAllUsers();
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
+
     [HttpGet("me")]
     [Authorize]
     public IActionResult GetProfile()

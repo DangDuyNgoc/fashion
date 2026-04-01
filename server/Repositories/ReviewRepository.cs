@@ -25,7 +25,7 @@ namespace server.Repositories
                 .AnyAsync(r => r.OrderItemId == orderItemId);
         }
 
-         public async Task<List<Review>> GetByProductIdAsync(int productId)
+        public async Task<List<Review>> GetByProductIdAsync(int productId)
         {
             return await _context.Reviews
                 .Include(r => r.User)
@@ -34,10 +34,20 @@ namespace server.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<Review>> GetAllAsync()
+        {
+            return await _context.Reviews
+                .Include(r => r.User)
+                .Include(r => r.Product)
+                .OrderByDescending(r => r.CreatedAt)
+                .ToListAsync();
+        }
+
         public async Task<Review?> GetByIdAsync(int id)
         {
             return await _context.Reviews
                 .Include(r => r.User)
+                .Include(r => r.Product)
                 .Include(r => r.OrderItem)
                     .ThenInclude(oi => oi.Order)
                 .FirstOrDefaultAsync(r => r.Id == id);

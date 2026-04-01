@@ -38,7 +38,7 @@ const chartData = [
 const AppAreaChart = () => {
   return (
     <div className="">
-      <h1 className="text-lg font-medium mb-6">Total Visitors</h1>
+      <h1 className="text-lg font-medium mb-6">Tổng số lượt truy cập</h1>
       <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
         <AreaChart accessibilityLayer data={chartData}>
           <CartesianGrid vertical={false} />

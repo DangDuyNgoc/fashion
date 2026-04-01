@@ -14,6 +14,8 @@ namespace server.Interfaces
 
         Task<List<Review>> GetByProductIdAsync(int productId);
 
+        Task<List<Review>> GetAllAsync();
+
         Task SaveChangesAsync();
     }
 }

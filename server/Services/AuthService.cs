@@ -191,6 +191,20 @@ public class AuthService : IAuthService
         _repo.Save();
     }
 
+    public IEnumerable<UserProfileResponse> GetAllUsers()
+    {
+        return _repo.GetAll().Select(u => new UserProfileResponse
+        {
+            Id = u.Id,
+            Name = u.Name,
+            Email = u.Email,
+            Phone = u.Phone ?? "",
+            AvatarUrl = u.AvatarUrl,
+            Role = u.Role.ToString(),
+            CreatedAt = u.CreatedAt
+        });
+    }
+
     public UserProfileResponse GetProfile(Guid userId)
     {
         var user = _repo.GetById(userId)

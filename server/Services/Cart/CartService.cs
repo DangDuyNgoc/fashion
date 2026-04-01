@@ -149,7 +149,8 @@ namespace server.Services
                     ProductName = i.Variant.Product.Name,
                     VariantName = $"{i.Variant.Color} - {i.Variant.Size}",
                     Price = i.Variant.Product.Price,
-                    Quantity = i.Quantity
+                    Quantity = i.Quantity,
+                    ImageUrl = i.Variant.Product.Images.FirstOrDefault()?.ImageUrl ?? ""
                 }).ToList()
             };
         }

@@ -6,6 +6,7 @@ namespace server.Services
     {
         Task<List<ProductImageDTO>> GetByProductId(int productId);
         Task<List<ProductImageDTO>> UploadImages(UploadProductImageDTO dto);
+        Task<bool> UpdateColor(int id, string color);
         Task<bool> Delete(int id);
     }
 }

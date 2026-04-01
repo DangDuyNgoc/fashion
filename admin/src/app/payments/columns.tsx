@@ -45,7 +45,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "fullName",
-    header: "User",
+    header: "Người dùng",
   },
   {
     accessorKey: "email",
@@ -63,7 +63,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "status",
-    header: "Status",
+    header: "Trạng thái",
     cell: ({ row }) => {
       const status = row.getValue("status");
 
@@ -83,12 +83,12 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
+    header: () => <div className="text-right">Số tiền</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("amount"));
-      const formatted = new Intl.NumberFormat("en-US", {
+      const formatted = new Intl.NumberFormat("vi-VN", {
         style: "currency",
-        currency: "USD",
+        currency: "VND",
       }).format(amount);
 
       return <div className="text-right font-medium">{formatted}</div>;
@@ -103,22 +103,22 @@ export const columns: ColumnDef<Payment>[] = [
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
+              <span className="sr-only">Mở menu</span>
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>Thao tác</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(payment.id)}
             >
-              Copy payment ID
+              Sao chép ID thanh toán
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <Link href={`/users/${payment.userId}`}>View customer</Link>
+              <Link href={`/users/${payment.userId}`}>Xem chi tiết</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem>Xem chi tiết thanh toán</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

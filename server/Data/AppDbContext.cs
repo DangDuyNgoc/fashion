@@ -31,8 +31,6 @@ namespace server.Data
 
         public DbSet<Address> Addresses { get; set; }
 
-        public DbSet<SearchLog> SearchLogs { get; set; }
-
          protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

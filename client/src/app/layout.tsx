@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Trendlama - Best Clothes",
-  description: "Trendlama is the best place to find the best clothes",
+  title: "Fashion - Best Clothes",
+  description: "Fashion is the best place to find the best clothes",
 };
 
 export default function RootLayout({

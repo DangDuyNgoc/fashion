@@ -18,5 +18,7 @@ namespace server.Services
         Task DeleteReviewByAdminAsync(int reviewId);
 
         Task UpdateReviewByAdminAsync(int reviewId, UpdateReviewRequest req);
+
+        Task<List<ReviewResponse>> GetAllReviewsByAdminAsync();
     }
 }

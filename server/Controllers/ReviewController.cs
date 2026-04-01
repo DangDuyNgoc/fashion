@@ -90,5 +90,13 @@ namespace server.Controllers
             await _service.UpdateReviewByAdminAsync(id, req);
             return Ok(new { message = "Review updated by admin" });
         }
+
+        [Authorize(Role = "Admin")]
+        [HttpGet("admin-all")]
+        public async Task<IActionResult> GetAllForAdmin()
+        {
+            var result = await _service.GetAllReviewsByAdminAsync();
+            return Ok(new { message = "All reviews retrieved", data = result });
+        }
     }
 }

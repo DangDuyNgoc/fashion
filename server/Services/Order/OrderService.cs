@@ -3,6 +3,7 @@ using server.Interfaces;
 using server.Models;
 using server.Data;
 using server.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System.Net.Sockets;
 
 namespace server.Services
@@ -114,8 +115,16 @@ namespace server.Services
         public async Task<List<OrderResponse>> GetUserOrders(Guid userId)
         {
             var orders = await _orderRepo.GetByUserIdAsync(userId);
+            
+            var orderItemIds = orders.SelectMany(o => o.Items.Select(i => i.Id)).ToList();
+            var reviewedOrderItemIds = await _context.Reviews
+                .Where(r => orderItemIds.Contains(r.OrderItemId))
+                .Select(r => r.OrderItemId)
+                .ToListAsync();
 
-            return orders.Select(MapToResponse).ToList();
+            var reviewedSet = new HashSet<int>(reviewedOrderItemIds);
+
+            return orders.Select(o => MapToResponse(o, reviewedSet)).ToList();
         }
 
         public async Task<OrderResponse?> GetOrderById(int orderId, Guid userId)
@@ -125,13 +134,28 @@ namespace server.Services
             if (order == null || order.UserId != userId)
                 return null;
 
-            return MapToResponse(order);
+            var orderItemIds = order.Items.Select(i => i.Id).ToList();
+            var reviewedOrderItemIds = await _context.Reviews
+                .Where(r => orderItemIds.Contains(r.OrderItemId))
+                .Select(r => r.OrderItemId)
+                .ToListAsync();
+
+            return MapToResponse(order, new HashSet<int>(reviewedOrderItemIds));
         }
 
         public async Task<List<OrderResponse>> GetAllOrders()
         {
             var orders = await _orderRepo.GetAllAsync();
-            return orders.Select(MapToResponse).ToList();
+            
+            var orderItemIds = orders.SelectMany(o => o.Items.Select(i => i.Id)).ToList();
+            var reviewedOrderItemIds = await _context.Reviews
+                .Where(r => orderItemIds.Contains(r.OrderItemId))
+                .Select(r => r.OrderItemId)
+                .ToListAsync();
+            
+            var reviewedSet = new HashSet<int>(reviewedOrderItemIds);
+
+            return orders.Select(o => MapToResponse(o, reviewedSet)).ToList();
         }
 
         public async Task<OrderResponse?> GetOrderByIdForAdmin(int orderId)
@@ -139,7 +163,13 @@ namespace server.Services
             var order = await _orderRepo.GetByIdAsync(orderId);
             if (order == null) return null;
 
-            return MapToResponse(order);
+            var orderItemIds = order.Items.Select(i => i.Id).ToList();
+            var reviewedOrderItemIds = await _context.Reviews
+                .Where(r => orderItemIds.Contains(r.OrderItemId))
+                .Select(r => r.OrderItemId)
+                .ToListAsync();
+
+            return MapToResponse(order, new HashSet<int>(reviewedOrderItemIds));
         }
 
         public async Task<bool> UpdateOrderStatus(int orderId, string status)
@@ -164,7 +194,7 @@ namespace server.Services
             return true;
         }
 
-        private OrderResponse MapToResponse(Order order)
+        private OrderResponse MapToResponse(Order order, HashSet<int> reviewedOrderItemIds)
         {
             return new OrderResponse
             {
@@ -176,10 +206,13 @@ namespace server.Services
                 CreatedAt = order.CreatedAt,
                 Items = order.Items.Select(i => new OrderItemResponse
                 {
+                    Id = i.Id,
+                    ProductId = i.Variant.ProductId,
                     VariantId = i.VariantId,
                     ProductName = i.ProductName,
                     Quantity = i.Quantity,
-                    Price = i.Price
+                    Price = i.Price,
+                    IsReviewed = reviewedOrderItemIds.Contains(i.Id)
                 }).ToList()
             };
         }
@@ -187,7 +220,7 @@ namespace server.Services
         private async Task<OrderResponse> MapToResponse(int orderId)
         {
             var order = await _orderRepo.GetByIdAsync(orderId);
-            return MapToResponse(order!);
+            return MapToResponse(order!, new HashSet<int>());
         }
     }
 }

@@ -20,6 +20,7 @@ namespace server.Repositories
                 .Include(c => c.Items)
                     .ThenInclude(i => i.Variant)
                         .ThenInclude(v => v.Product)
+                            .ThenInclude(p => p.Images)
                 .FirstOrDefaultAsync(c => c.UserId == userId);
         }
 
