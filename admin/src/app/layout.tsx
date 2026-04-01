@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import AppSidebar from "@/components/AppSidebar";
-import Navbar from "@/components/Navbar";
+
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { AuthWrapper } from "@/components/providers/AuthWrapper";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,13 +45,10 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <SidebarProvider defaultOpen={defaultOpen}>
-            <AppSidebar />
-            <main className="w-full">
-              <Navbar />
-              <div className="px-4">{children}</div>
-            </main>
+            <AuthWrapper>{children}</AuthWrapper>
           </SidebarProvider>
         </ThemeProvider>
+        <ToastContainer position="top-right" autoClose={3000} />
       </body>
     </html>
   );

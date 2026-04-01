@@ -22,6 +22,11 @@ namespace server.Repositories
                 .AsNoTracking()
                 .FirstOrDefault(x => x.Email == email);   
         }
+
+        public IEnumerable<User> GetAll()
+        {
+            return _context.Users.AsNoTracking().ToList();
+        }
             
         public User? GetById(Guid id)
         {

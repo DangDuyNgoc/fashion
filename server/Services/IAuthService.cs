@@ -13,6 +13,7 @@ namespace server.Services
         Task<string> ForgotPassword(ForgotPasswordRequest req);
         void ResetPassword(ResetPasswordRequest req);
         void VerifyEmail(VerifyEmailRequest req);
+        IEnumerable<UserProfileResponse> GetAllUsers();
         UserProfileResponse GetProfile(Guid userId);
         void UpdateProfile(Guid userId, UpdateProfileRequest req);
         void UpdateUserRole(Guid userId, string role);

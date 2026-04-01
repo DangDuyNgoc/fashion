@@ -29,13 +29,26 @@ namespace server.Controllers
             return Ok(new { message = "Images uploaded successfully", images = result });
         }
 
+        // ================= UPDATE COLOR =================
+        [HttpPut("update-color/{id}")]
+        [Authorize(Role = "Admin")]
+        public async Task<IActionResult> UpdateColor(int id, [FromBody] UpdateProductImageColorRequest req)
+        {
+            var result = await _service.UpdateColor(id, req.Color);
+            
+            if (!result)
+                return NotFound(new { message = "Image not found" });
+
+            return Ok(new { message = "Updated color successfully" });
+        }
+
         // ================= DELETE =================
         [HttpDelete("delete-image/{id}")]
         [Authorize(Role = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _service.Delete(id);
-
+    
             if (!result)
                 return NotFound(new { message = "Image not found" });
 

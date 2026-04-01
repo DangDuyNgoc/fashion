@@ -7,6 +7,7 @@ namespace server.Interfaces
         User? GetByEmail(string email);
         User? GetById(Guid id);
         User? GetByRefreshToken(string token);
+        IEnumerable<User> GetAll();
         
         void Add(User user);
         void Update(User user);

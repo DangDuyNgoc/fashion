@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using server.Data;
+using server.DTOs;
 using server.Models;
 
 namespace server.Repositories
@@ -29,6 +30,24 @@ namespace server.Repositories
                 .Include(p => p.Variants)
                 .Include(p => p.Category)
                 .Include(p => p.Reviews)
+                .Select(p => new Product
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Description = p.Description,
+                    Price = p.Price,
+                    CategoryId = p.CategoryId,
+                    Category = p.Category,
+                    Variants = p.Variants,
+                    Reviews = p.Reviews,
+                    Images = p.Images.Select(i => new ProductImage
+                    {
+                        Id = i.Id,
+                        ProductId = i.ProductId,
+                        ImageUrl = i.ImageUrl,
+                        Color = i.Color
+                    }).ToList()
+                })
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
@@ -74,6 +93,7 @@ namespace server.Repositories
                 .Include(p => p.Images)
                 .Include(p => p.Category)
                 .Include(p => p.Variants)
+                .AsSplitQuery()
                 .AsQueryable();
 
             // Category
@@ -118,7 +138,8 @@ namespace server.Repositories
             var page = filter.Page <= 0 ? 1 : filter.Page;
             var pageSize = filter.PageSize <= 0 ? 10 : filter.PageSize;
 
-            query = query.Skip((page - 1) * pageSize)
+            query = query.OrderBy(p=> p.Id)
+                        .Skip((page - 1) * pageSize)
                         .Take(pageSize);
 
             return await query.ToListAsync();

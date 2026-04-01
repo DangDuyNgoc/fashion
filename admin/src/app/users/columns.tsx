@@ -14,17 +14,12 @@ import { cn } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 
-export type User = {
-  id: string;
-  avatar: string;
-  fullName: string;
-  email: string;
-  status: "active" | "inactive";
-};
+import { authService } from "@/service/auth.service";
+import { toast } from "react-toastify";
+import { User } from "@/types/api";
 
-export const columns: ColumnDef<User>[] = [
+export const columns: (onRefresh: () => void) => ColumnDef<User>[] = (onRefresh) => [
   {
     id: "select",
     header: ({ table }) => (
@@ -44,15 +39,15 @@ export const columns: ColumnDef<User>[] = [
     ),
   },
   {
-    accessorKey: "avatar",
-    header: "Avatar",
+    accessorKey: "avatarUrl",
+    header: "Ảnh đại diện",
     cell: ({ row }) => {
       const user = row.original;
       return (
         <div className="w-9 h-9 relative">
           <Image
-            src={user.avatar}
-            alt={user.fullName}
+            src={user.avatarUrl ? (user.avatarUrl.startsWith("http") ? user.avatarUrl : `http://localhost:5015${user.avatarUrl}`) : "/users/1.png"}
+            alt={user.name}
             fill
             className="rounded-full object-cover"
           />
@@ -61,8 +56,8 @@ export const columns: ColumnDef<User>[] = [
     },
   },
   {
-    accessorKey: "fullName",
-    header: "User",
+    accessorKey: "name",
+    header: "Người dùng",
   },
   {
     accessorKey: "email",
@@ -79,47 +74,69 @@ export const columns: ColumnDef<User>[] = [
     },
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "role",
+    header: "Phân quyền",
     cell: ({ row }) => {
-      const status = row.getValue("status");
+      const role = row.getValue("role");
 
       return (
         <div
           className={cn(
-            `p-1 rounded-md w-max text-xs`,
-            status === "active" && "bg-green-500/40",
-            status === "inactive" && "bg-red-500/40"
+            `p-1 px-2 rounded-md w-max text-xs font-semibold`,
+            role === "Admin" ? "bg-red-100 text-red-700" : "bg-blue-100 text-blue-700"
           )}
         >
-          {status as string}
+          {role as string}
         </div>
       );
+    },
+  },
+  {
+    accessorKey: "createdAt",
+    header: "Ngày tạo",
+    cell: ({ row }) => {
+      const date = new Date(row.getValue("createdAt"));
+      return <span>{date.toLocaleDateString("vi-VN")}</span>;
     },
   },
   {
     id: "actions",
     cell: ({ row }) => {
       const user = row.original;
+      const isAdmin = user.role === "Admin";
+
+      const handleToggleRole = async () => {
+        try {
+          const newRole = isAdmin ? "User" : "Admin";
+          await authService.updateUserRole(user.id, newRole);
+          toast.success(`Đã cập nhật quyền thành ${newRole}`);
+          onRefresh();
+        } catch (error) {
+          const err = error as { response?: { data?: { message?: string } } };
+          toast.error(err.response?.data?.message || "Lỗi cập nhật quyền");
+        }
+      };
 
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
+              <span className="sr-only">Mở menu</span>
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>Thao tác</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(user.id)}
             >
-              Copy user ID
+              Sao chép ID người dùng
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Link href={`/users/${user.id}`}>View customer</Link>
+            <DropdownMenuItem 
+              onClick={handleToggleRole}
+            >
+              {isAdmin ? "Giáng quyền (User)" : "Thăng quyền (Admin)"}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

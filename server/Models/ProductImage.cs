@@ -9,5 +9,6 @@ namespace server.Models
         public Product Product { get; set; } = null!;
 
         public string ImageUrl { get; set; } = string.Empty;
+        public string? Color { get; set; }
     }
 }

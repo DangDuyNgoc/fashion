@@ -7,6 +7,7 @@ namespace server.DTOs
         public int Id { get; set; }
         public int ProductId { get; set; }
         public string ImageUrl { get; set; } = string.Empty;
+        public string? Color { get; set; }
     }
 
     public class UploadProductImageDTO
@@ -14,5 +15,11 @@ namespace server.DTOs
         [Required]
         public int ProductId { get; set; }
         public List<IFormFile> Images { get; set; } = new();
+        public string? Color { get; set; }
+    }
+
+    public class UpdateProductImageColorRequest
+    {
+        public string Color { get; set; } = string.Empty;
     }
 }

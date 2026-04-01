@@ -15,12 +15,12 @@ const TodoList = () => {
   const [open, setOpen] = useState(false);
   return (
     <div className="">
-      <h1 className="text-lg font-medium mb-6">Todo List</h1>
+      <h1 className="text-lg font-medium mb-6">Danh sách công việc</h1>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button className="w-full">
             <CalendarIcon />
-            {date ? format(date, "PPP") : <span>Pick a date</span>}
+            {date ? format(date, "PPP") : <span>Chọn một ngày</span>}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="p-0 w-auto">
@@ -42,7 +42,7 @@ const TodoList = () => {
             <div className="flex items-center gap-4">
               <Checkbox id="item1" checked />
               <label htmlFor="item1" className="text-sm text-muted-foreground">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Nội dung công việc mẫu.
               </label>
             </div>
           </Card>
@@ -51,7 +51,7 @@ const TodoList = () => {
             <div className="flex items-center gap-4">
               <Checkbox id="item1" checked />
               <label htmlFor="item1" className="text-sm text-muted-foreground">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Nội dung công việc mẫu.
               </label>
             </div>
           </Card>
@@ -60,7 +60,7 @@ const TodoList = () => {
             <div className="flex items-center gap-4">
               <Checkbox id="item1" />
               <label htmlFor="item1" className="text-sm text-muted-foreground">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Nội dung công việc mẫu.
               </label>
             </div>
           </Card>
@@ -69,7 +69,7 @@ const TodoList = () => {
             <div className="flex items-center gap-4">
               <Checkbox id="item1" />
               <label htmlFor="item1" className="text-sm text-muted-foreground">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Nội dung công việc mẫu.
               </label>
             </div>
           </Card>
@@ -78,7 +78,7 @@ const TodoList = () => {
             <div className="flex items-center gap-4">
               <Checkbox id="item1" />
               <label htmlFor="item1" className="text-sm text-muted-foreground">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Nội dung công việc mẫu.
               </label>
             </div>
           </Card>
@@ -87,7 +87,7 @@ const TodoList = () => {
             <div className="flex items-center gap-4">
               <Checkbox id="item1" />
               <label htmlFor="item1" className="text-sm text-muted-foreground">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Nội dung công việc mẫu.
               </label>
             </div>
           </Card>
@@ -96,7 +96,7 @@ const TodoList = () => {
             <div className="flex items-center gap-4">
               <Checkbox id="item1" />
               <label htmlFor="item1" className="text-sm text-muted-foreground">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Nội dung công việc mẫu.
               </label>
             </div>
           </Card>
@@ -105,7 +105,7 @@ const TodoList = () => {
             <div className="flex items-center gap-4">
               <Checkbox id="item1" />
               <label htmlFor="item1" className="text-sm text-muted-foreground">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Nội dung công việc mẫu.
               </label>
             </div>
           </Card>
@@ -114,7 +114,7 @@ const TodoList = () => {
             <div className="flex items-center gap-4">
               <Checkbox id="item1" checked />
               <label htmlFor="item1" className="text-sm text-muted-foreground">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Nội dung công việc mẫu.
               </label>
             </div>
           </Card>
@@ -123,7 +123,7 @@ const TodoList = () => {
             <div className="flex items-center gap-4">
               <Checkbox id="item1" checked />
               <label htmlFor="item1" className="text-sm text-muted-foreground">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Nội dung công việc mẫu.
               </label>
             </div>
           </Card>
@@ -132,7 +132,7 @@ const TodoList = () => {
             <div className="flex items-center gap-4">
               <Checkbox id="item1" checked />
               <label htmlFor="item1" className="text-sm text-muted-foreground">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Nội dung công việc mẫu.
               </label>
             </div>
           </Card>
@@ -141,7 +141,7 @@ const TodoList = () => {
             <div className="flex items-center gap-4">
               <Checkbox id="item1" checked />
               <label htmlFor="item1" className="text-sm text-muted-foreground">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Nội dung công việc mẫu.
               </label>
             </div>
           </Card>
@@ -150,7 +150,7 @@ const TodoList = () => {
             <div className="flex items-center gap-4">
               <Checkbox id="item1" checked />
               <label htmlFor="item1" className="text-sm text-muted-foreground">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Nội dung công việc mẫu.
               </label>
             </div>
           </Card>
