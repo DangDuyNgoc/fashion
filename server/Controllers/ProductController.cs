@@ -61,5 +61,12 @@ namespace server.Controllers
             var result = await _service.GetFilteredAsync(filter);
             return Ok(result);
         }
+
+        [HttpGet("suggestions")]
+        public async Task<IActionResult> GetSuggestions([FromQuery] string query)
+        {
+            var result = await _service.GetSuggestionsAsync(query);
+            return Ok(result);
+        }
     }
 }
