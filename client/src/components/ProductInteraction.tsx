@@ -205,15 +205,17 @@ const ProductInteraction = ({
         <span className="text-gray-500">Số lượng</span>
         <div className="flex items-center gap-2">
           <button
-            className="cursor-pointer border-1 border-gray-300 p-1"
+            className={`cursor-pointer border-1 border-gray-300 p-1 disabled:opacity-30 disabled:cursor-not-allowed`}
             onClick={() => handleQuantityChange("decrement")}
+            disabled={variantStock <= 0}
           >
             <Minus className="w-4 h-4" />
           </button>
-          <span>{quantity}</span>
+          <span className={variantStock <= 0 ? "text-gray-400" : ""}>{variantStock <= 0 ? 0 : quantity}</span>
           <button
-            className="cursor-pointer border-1 border-gray-300 p-1"
+            className={`cursor-pointer border-1 border-gray-300 p-1 disabled:opacity-30 disabled:cursor-not-allowed`}
             onClick={() => handleQuantityChange("increment")}
+            disabled={variantStock <= 0}
           >
             <Plus className="w-4 h-4" />
           </button>
@@ -232,8 +234,10 @@ const ProductInteraction = ({
       </button>
       <button
         onClick={handleBuyNow}
-        disabled={isAddingToCart}
-        className="ring-1 ring-gray-400 shadow-lg text-gray-800 px-4 py-2 rounded-md flex items-center justify-center cursor-pointer gap-2 text-sm font-medium hover:bg-gray-50 transition-colors disabled:opacity-70"
+        disabled={variantStock <= 0 || isAddingToCart}
+        className={`ring-1 ring-gray-400 shadow-lg text-gray-800 px-4 py-2 rounded-md flex items-center justify-center cursor-pointer gap-2 text-sm font-medium transition-colors disabled:opacity-70 ${
+          variantStock > 0 ? "hover:bg-gray-50" : "bg-gray-100 cursor-not-allowed"
+        }`}
       >
         <ShoppingCart className="w-4 h-4" />
         Mua ngay
