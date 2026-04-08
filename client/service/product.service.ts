@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import api from "@/lib/api";
 
 export interface ProductFilterParams {
@@ -20,4 +19,7 @@ export const productService = {
 
   filter: (params: ProductFilterParams) =>
     api.get("/product/filter", { params }),
+
+  getSuggestions: (query: string) =>
+    api.get("/product/suggestions", { params: { query } }),
 };
