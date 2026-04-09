@@ -9,7 +9,6 @@ namespace server.Services
         Task<ProductDTO> CreateAsync(CreateProductDTO dto);
         Task<ProductDTO?> UpdateAsync(int id, UpdateProductDTO dto);
         Task<List<ProductDTO>> GetFilteredAsync(ProductFilterRequest filter);
-        Task<List<ProductDTO>> GetSuggestionsAsync(string query);
         Task<bool> DeleteAsync(int id);
     }
 }

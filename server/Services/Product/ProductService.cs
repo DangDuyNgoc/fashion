@@ -97,25 +97,6 @@ namespace server.Services
             return products.Select(MapToDTO).ToList();
         }
 
-        public async Task<List<ProductDTO>> GetSuggestionsAsync(string query)
-        {
-            if (string.IsNullOrWhiteSpace(query)) return new List<ProductDTO>();
-
-            var filter = new ProductFilterRequest
-            {
-                Keyword = query,
-                PageSize = 8,
-                Page = 1
-            };
-
-            var products = await _repo.GetFilteredAsync(filter);
-            
-            var sorted = products.OrderByDescending(p => p.Name.ToLower() == query.ToLower())
-                                .ThenByDescending(p => p.Name.ToLower().StartsWith(query.ToLower()))
-                                .ToList();
-
-            return sorted.Select(MapToDTO).ToList();
-        }
 
         // ================= MAPPING =================
         private ProductDTO MapToDTO(Product p)

@@ -25,6 +25,10 @@
       "PackagePath": "staticwebassets\\images\\411b3cf1-1f5a-4d5e-832d-57e1cdc4817a.png"
     },
     {
+      "Id": "E:\\fashion\\server\\wwwroot\\images\\4ad88548-af42-435e-bc72-afc411d513c3.png",
+      "PackagePath": "staticwebassets\\images\\4ad88548-af42-435e-bc72-afc411d513c3.png"
+    },
+    {
       "Id": "E:\\fashion\\server\\wwwroot\\images\\4ada74eb-012f-4e1f-b4a1-be66b3a314bc.png",
       "PackagePath": "staticwebassets\\images\\4ada74eb-012f-4e1f-b4a1-be66b3a314bc.png"
     },
@@ -55,6 +59,10 @@
     {
       "Id": "E:\\fashion\\server\\wwwroot\\images\\9e57f103-8cee-4b9b-9105-cebfda77722d.png",
       "PackagePath": "staticwebassets\\images\\9e57f103-8cee-4b9b-9105-cebfda77722d.png"
+    },
+    {
+      "Id": "E:\\fashion\\server\\wwwroot\\images\\a21c3173-7767-44ce-ac7f-0cfcc3b8376d.png",
+      "PackagePath": "staticwebassets\\images\\a21c3173-7767-44ce-ac7f-0cfcc3b8376d.png"
     },
     {
       "Id": "E:\\fashion\\server\\wwwroot\\images\\a642b6c2-9105-4759-be7a-164bd5471b38.png",
@@ -99,6 +107,10 @@
     {
       "Id": "E:\\fashion\\server\\wwwroot\\images\\e7558235-80ba-4477-883c-bb54bde20bbf.png",
       "PackagePath": "staticwebassets\\images\\e7558235-80ba-4477-883c-bb54bde20bbf.png"
+    },
+    {
+      "Id": "E:\\fashion\\server\\wwwroot\\images\\f42d2baa-fec3-4091-bb92-79c2b13e84df.png",
+      "PackagePath": "staticwebassets\\images\\f42d2baa-fec3-4091-bb92-79c2b13e84df.png"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.server.props",
