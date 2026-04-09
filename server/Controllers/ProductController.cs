@@ -10,10 +10,12 @@ namespace server.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _service;
+        private readonly IAiSearchService _aiSearch;
 
-        public ProductController(IProductService service)
+        public ProductController(IProductService service, IAiSearchService aiSearch)
         {
             _service = service;
+            _aiSearch = aiSearch;
         }
 
         [HttpGet("get-all-products")]
@@ -62,10 +64,10 @@ namespace server.Controllers
             return Ok(result);
         }
 
-        [HttpGet("suggestions")]
-        public async Task<IActionResult> GetSuggestions([FromQuery] string query)
+        [HttpGet("ai-suggestions")]
+        public async Task<IActionResult> GetAiSuggestions([FromQuery] string query)
         {
-            var result = await _service.GetSuggestionsAsync(query);
+            var result = await _aiSearch.SearchAsync(query);
             return Ok(result);
         }
     }

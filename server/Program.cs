@@ -22,6 +22,7 @@ Env.Load();
 builder.Configuration["Jwt:Key"] = Env.GetString("JWT_KEY");
 builder.Configuration["Jwt:Issuer"] = Env.GetString("JWT_ISSUER");
 builder.Configuration["Jwt:Audience"] = Env.GetString("JWT_AUDIENCE");
+builder.Configuration["Groq:ApiKey"] = Env.GetString("GROQ_API_KEY");
 
 // DB
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -109,6 +110,10 @@ builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<SecurityService>();
 builder.Services.AddScoped<EmailService>();
+
+// AI Search
+builder.Services.AddMemoryCache();
+builder.Services.AddHttpClient<IAiSearchService, AiSearchService>();
 
 builder.Services.AddControllers();
 

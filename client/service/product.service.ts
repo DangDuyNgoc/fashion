@@ -20,6 +20,6 @@ export const productService = {
   filter: (params: ProductFilterParams) =>
     api.get("/product/filter", { params }),
 
-  getSuggestions: (query: string) =>
-    api.get("/product/suggestions", { params: { query } }),
+  getAiSuggestions: (query: string) =>
+    api.get("/product/ai-suggestions", { params: { query } }),
 };
